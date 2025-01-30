@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Color Changer</title>
+    <style>
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            background-color: #222;
+            transition: background-color 1s ease-in-out;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h1 {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 20px;
+            animation: colorFade 3s infinite alternate;
+        }
+
+       
+        button {
+            font-size: 18px;
+            padding: 12px 24px;
+            margin: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #start-btn {
+            background: #4CAF50;
+            color: white;
+        }
+
+        #start-btn:hover {
+            background: #45a049;
+            transform: scale(1.1);
+        }
+
+        #stop-btn {
+            background: #f44336;
+            color: white;
+        }
+
+        #stop-btn:hover {
+            background: #d32f2f;
+            transform: scale(1.1);
+        }
+
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes colorFade {
+            from {
+                color: #ff9a9e;
+            }
+            to {
+                color: #fad0c4;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: 90%;
+            }
+            h1 {
+                font-size: 20px;
+            }
+            button {
+                font-size: 16px;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="heading">Click "Start" to change the background color every second!</h1>
+        <button id="start-btn"> Start </button>
+        <button id="stop-btn"> Stop </button>
+    </div>
+
+    <script>
+        const randomColor = function () {
+            const hex = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += hex[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        };
+
+        let intervalId = null;
+
+        const startChangingColor = function () {
+            if (!intervalId) {
+                intervalId = setInterval(changeBgColor, 1000);
+            }
+        };
+
+        function changeBgColor() {
+            document.body.style.backgroundColor = randomColor();
+        }
+
+        const stopChangingColor = function () {
+            clearInterval(intervalId);
+            intervalId = null;
+        };
+
+        document.querySelector('#start-btn').addEventListener('click', startChangingColor);
+        document.querySelector('#stop-btn').addEventListener('click', stopChangingColor);
+    </script>
+</body>
+</html>
